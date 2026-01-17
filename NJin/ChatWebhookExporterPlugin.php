@@ -28,7 +28,7 @@ class ChatWebhookExporterPlugin implements CallbackListener, Plugin {
 
     // Plugin Information
     const ID                 = 219;
-    const VERSION            = 1.1;
+    const VERSION            = 1.2;
     const PLUGIN_NAME        = 'Chat Webhook Exporter';
     const PLUGIN_AUTHOR      = 'N-Jin';
     const PLUGIN_DESCRIPTION = 'Exports chat messages to a Webhook. (e.g. Discord)';
@@ -136,7 +136,7 @@ class ChatWebhookExporterPlugin implements CallbackListener, Plugin {
                 "username" => $serverName,
                 "embeds" => [
                     [
-                    "description" => Formatter::stripColors($player->nickname) ." (".$player->login.") from ". $playerZone . ($player->isSpectator ? " joined as Spectator." : " joined."),
+                    "description" => Formatter::stripCodes($player->nickname) ." (".$player->login.") from ". $playerZone . ($player->isSpectator ? " joined as Spectator." : " joined."),
                     "color" => hexdec("00CC00"),
                     "timestamp" => date('c', time())
                     ]
@@ -167,7 +167,7 @@ class ChatWebhookExporterPlugin implements CallbackListener, Plugin {
                 "username" => $serverName,
                 "embeds" => [
                     [
-                    "description" => Formatter::stripColors($player->nickname) ." (".$player->login.") from " .$playerZone. " left. ",
+                    "description" => Formatter::stripCodes($player->nickname) ." (".$player->login.") from " .$playerZone. " left. ",
                     "color" => hexdec("CC0000"),
                     "footer" => [
                         "text" => "Playtime: " .$playTime,
@@ -197,7 +197,7 @@ class ChatWebhookExporterPlugin implements CallbackListener, Plugin {
         $chatMessagePluginCommands = array("/me","/hi","/bb","/bye","/thx","/gg","/gl","/hf","/glhf","/ns","/n1","/lol","/lool","/brb","/bgm","/afk","/wp","/bm","/bootme","/rq","/ragequit");
         $nickname = "";
 		if ($player) {
-			$nickname = Formatter::stripColors($player->nickname);
+			$nickname = Formatter::stripCodes($player->nickname);
             if ($this->checkWebhookUrl() === 200 && $playerData[1][0] !== 0) {
                 $serverName = Formatter::stripCodes($this->maniaControl->getClient()->getServerName());
                 if (in_array(explode(" ",$playerData[1][2], 2)[0], $chatMessagePluginCommands)) {
